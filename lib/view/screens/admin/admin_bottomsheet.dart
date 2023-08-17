@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hawksApp/view/screens/admin/admin_client.dart';
 import 'package:hawksApp/view/screens/admin/admin_projects.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../theme/colors.dart';
 import 'admin_task.dart';
 
 
@@ -33,8 +34,8 @@ class _AdminBottomSheetState extends State<AdminBottomSheet> {
         },
         selectedLabelColor: Colors.white,
         unselectedLabelColor: Colors.grey,
-        selectedBackgroundColor: Colors.indigo.shade300,
-        unselectedBackgroundColor: Colors.indigo.shade50,
+        selectedBackgroundColor: Color(ColorT.PrimaryColor),
+        unselectedBackgroundColor: Colors.red.shade50,
         unselectedIconColor: Colors.grey.shade600,
         selectedIconColor: Colors.white,
         customBottomNavItems: [

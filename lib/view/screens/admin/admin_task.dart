@@ -3,6 +3,7 @@ import 'package:hawksApp/view/screens/login_page.dart';
 import 'package:hawksApp/view/widgets/tasktext.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../theme/colors.dart';
 import 'add_task.dart';
 import 'admin_view.dart';
 
@@ -16,118 +17,119 @@ class AdminPage extends StatefulWidget {
 class _AdminPageState extends State<AdminPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.indigo[300],
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return AddTask();
-          },)),
-          child:  Icon(Iconsax.add),
-        ),
-        body: ListView(
-          children : [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 220,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(25)
-                    , bottomLeft: Radius.circular(25)),
-                    color: Colors.indigo.shade300),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Column(mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Welcome",
-                                style:
-                                TextStyle(fontWeight: FontWeight.bold, fontSize: 35,color: Colors.white ),
-                              ),
-                              Text(
-                                "Hawks Solutions",
-                                style:
-                                TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
-                              ),
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(ColorT.PrimaryColor),
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return AddTask();
+        },)),
+        child:  Icon(Iconsax.add),
+      ),
+      body: ListView(
+        children : [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 220,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(25)
+                  , bottomLeft: Radius.circular(25)),
+                  color: Color(ColorT.PrimaryColor),),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Column(mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Welcome",
+                              style:
+                              TextStyle(fontWeight: FontWeight.bold, fontSize: 35,color: Colors.white ),
+                            ),
+                            Text(
+                              "Hawks Solutions",
+                              style:
+                              TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
+                            ),
 
-                            ],
-                          ),
+                          ],
                         ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
-                          },
-                          icon: Icon(
-                            Icons.power_settings_new_outlined,
-                            size: 30,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: InkWell(
-                        onTap: () {
+                      ),
+                      IconButton(
+                        onPressed: () {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AdminView()));
+                                  builder: (context) => LoginPage()));
                         },
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(12))
-                          ),
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Iconsax.task),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text("Manage your task information"),
-                            ],
-                          ),
+                        icon: Icon(
+                          Icons.power_settings_new_outlined,
+                          size: 30,
+                          color: Colors.white,
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AdminView()));
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(12))
+                        ),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Iconsax.task),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text("Manage your task information"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              SizedBox(
-                height: 20,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Text(
+                "Task",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Text(
-                  "Task",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-              ),
-              Divider(),
-              ListView.builder(
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 5,
-                itemBuilder: (context, index) => getTask(index),
-              ),
-            ],
-          ),
-          ]
+            ),
+            Divider(),
+            ListView.builder(
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: 5,
+              itemBuilder: (context, index) => getTask(index),
+            ),
+          ],
         ),
+        ]
       ),
     );
   }
@@ -147,7 +149,7 @@ class _AdminPageState extends State<AdminPage> {
               height: 50,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.indigo.shade300,
+                color: Color(ColorT.PrimaryColor),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(15),
                   topLeft: Radius.circular(15),
@@ -175,7 +177,7 @@ class _AdminPageState extends State<AdminPage> {
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: Colors.indigo.shade300,
+                  color: Color(ColorT.PrimaryColor),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
                     bottomRight: Radius.circular(15),
@@ -209,8 +211,19 @@ class _AdminPageState extends State<AdminPage> {
                         ],
                       ),
                       Divider(),
-                      Text("Task Description: It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-                        maxLines: 2,style: TextStyle(
+                      Text("There are many variations of passages of Lorem Ipsum available,"
+                          " but the majority have suffered alteration in some form, "
+                          "by injected humour, or randomised words which don't look"
+                          " even slightly believable. If you are going to use a passage "
+                          "of Lorem Ipsum, you need to be sure there isn't anything embarrassing "
+                          "hidden in the middle of text. All the Lorem Ipsum generators on the "
+                          "Internet tend to repeat predefined chunks as necessary, making this "
+                          "the first true generator on the Internet. It uses a dictionary"
+                          " of over 200 Latin words, combined with a handful of model "
+                          "sentence structures, to generate Lorem Ipsum which looks reasonable."
+                          "The generated Lorem Ipsum is therefore always free"
+                          " from repetition, injected humour or non-characteristic words etc.",
+                        maxLines: 5,style: TextStyle(
                             fontSize: 12, color: Colors.grey.shade900
                         ),),
                       Divider(),

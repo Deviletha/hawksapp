@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../theme/colors.dart';
 import 'admin_modules.dart';
 
 class AdProjects extends StatefulWidget {
@@ -36,10 +37,10 @@ class _AdProjectsState extends State<AdProjects> {
         child: Container(
           height: 150,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.indigo.shade700,),
+            border: Border.all(color: Color(ColorT.PrimaryColor),),
             borderRadius: BorderRadius.all(Radius.circular(15)),
             image: DecorationImage(
-                image: AssetImage("assets/bg 1.jpg"), fit: BoxFit.fill),
+                image: AssetImage("assets/project_bg.jpeg"), fit: BoxFit.fill),
           ),
           child: Center(
             child: Text("Projects Title",

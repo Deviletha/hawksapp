@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import '../../theme/colors.dart';
+import 'admin_bottomsheet.dart';
 
 class AdModules extends StatefulWidget {
   const AdModules({Key? key}) : super(key: key);
@@ -13,6 +16,14 @@ class _AdModulesState extends State<AdModules> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Modules"),
+        leading: IconButton(
+          icon: Icon(Iconsax.arrow_left), onPressed: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AdminBottomSheet()));
+        },
+        ),
       ),
       body: ListView.builder(
         physics: ScrollPhysics(),
@@ -28,10 +39,10 @@ class _AdModulesState extends State<AdModules> {
       child: Container(
         height: 150,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.indigo.shade700,),
+          border: Border.all(color: Color(ColorT.PrimaryColor),),
           borderRadius: BorderRadius.all(Radius.circular(15)),
           image: DecorationImage(
-              image: AssetImage("assets/bg3.jpg"), fit: BoxFit.fill),
+              image: AssetImage("assets/module bg.jpeg"), fit: BoxFit.fill),
         ),
         child: Center(
           child: Text("Modules",

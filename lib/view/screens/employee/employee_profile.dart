@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../theme/colors.dart';
 import '../../widgets/profilewidget.dart';
 
 class EmplProfile extends StatefulWidget {
@@ -20,20 +21,15 @@ class _EmplProfileState extends State<EmplProfile> {
       body: ListView(
         children: [
           Container(
-            height: 180,
+            height: 110,
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/pr bg.jpg"), fit: BoxFit.fill,),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(120),
-                // topLeft: Radius.circular(120),
-                // bottomRight: Radius.circular(160)
+                color: Color(ColorT.PrimaryColor),
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(120),
               ),
-              border: Border.all(color: Colors.indigo.shade900)
             ),
             child: Center(
               child: CircleAvatar(
-                backgroundImage: AssetImage("assets/avatar.png"), radius: 60,
+                backgroundImage: AssetImage("assets/profile avatar.png"), radius: 50,
               ),
             ),
           ),

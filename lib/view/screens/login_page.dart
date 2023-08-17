@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 60,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
-                      color: Colors.indigo.shade100
+                      color: Colors.red.shade100
                   ),
                   child: Row(mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 60,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
-                    color: Colors.lightGreen.shade100
+                    color: Colors.brown.shade100
                   ),
                   child: Row(mainAxisAlignment: MainAxisAlignment.center,
                     children: [

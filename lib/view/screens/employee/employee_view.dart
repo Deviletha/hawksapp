@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../../theme/colors.dart';
 import '../login_page.dart';
 
 class EmployeePage extends StatefulWidget {
@@ -14,83 +16,87 @@ class _EmployeePageState extends State<EmployeePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: ListView(
-          children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 150,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(25)
-                          , bottomLeft: Radius.circular(25)),
-                      color: Colors.indigo.shade300),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Column(mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Welcome",
-                                  style:
-                                  TextStyle(fontWeight: FontWeight.bold, fontSize: 35,color: Colors.white ),
-                                ),
-                                Text(
-                                  "Hawks Solutions",
-                                  style:
-                                  TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
-                                ),
-
-                              ],
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()));
-                            },
-                            icon: Icon(
-                              Icons.power_settings_new_outlined,
-                              size: 30,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    "Task",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                ),
-                Divider(),
-                ListView.builder(
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  itemBuilder: (context, index) => getTask(index),
-                ),
-              ],
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Color(ColorT.PrimaryColor),
         ),
+      ),
+      body: ListView(
+        children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 150,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(25)
+                        , bottomLeft: Radius.circular(25)),
+                    color: Color(ColorT.PrimaryColor),),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Column(mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Welcome",
+                                style:
+                                TextStyle(fontWeight: FontWeight.bold, fontSize: 35,color: Colors.white ),
+                              ),
+                              Text(
+                                "Hawks Solutions",
+                                style:
+                                TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
+                          },
+                          icon: Icon(
+                            Icons.power_settings_new_outlined,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Text(
+                  "Task",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
+              Divider(),
+              ListView.builder(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: 5,
+                itemBuilder: (context, index) => getTask(index),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -113,7 +119,7 @@ class _EmployeePageState extends State<EmployeePage> {
                 height: 50,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.indigo.shade300,
+                  color: Color(ColorT.PrimaryColor),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(15),
                     topLeft: Radius.circular(15),
@@ -141,7 +147,7 @@ class _EmployeePageState extends State<EmployeePage> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Colors.indigo.shade300,
+                    color: Color(ColorT.PrimaryColor),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../widgets/tasktext.dart';
 
 class EmplCompleted extends StatefulWidget {
   const EmplCompleted({Key? key}) : super(key: key);

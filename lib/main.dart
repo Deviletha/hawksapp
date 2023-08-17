@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:hawksApp/view/screens/login_page.dart';
+import 'package:hawksApp/view/theme/colors.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,13 +22,13 @@ class MyApp extends StatelessWidget {
 ThemeData _buildTheme(brightness) {
   var baseTheme = ThemeData(brightness: brightness);
   return baseTheme.copyWith(
-      textTheme: GoogleFonts.robotoTextTheme(baseTheme.textTheme),
-      appBarTheme: AppBarTheme(backgroundColor: Colors.indigo[300],
+      appBarTheme: AppBarTheme(backgroundColor: Color(ColorT.PrimaryColor),
         centerTitle: true, elevation: 0,
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.indigo[300],
+          statusBarColor: Color(ColorT.PrimaryColor),
+
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.light,
-        ),),focusColor: Colors.indigo,primaryColor: Colors.indigo
+        ),),focusColor: Color(ColorT.PrimaryColor),primaryColor: Color(ColorT.PrimaryColor),
   );
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hawksApp/view/screens/admin/admin_view.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../theme/colors.dart';
+
 class AssignTask extends StatefulWidget {
   const AssignTask({Key? key}) : super(key: key);
 
@@ -49,7 +51,7 @@ class _AssignTaskState extends State<AssignTask> {
                       height: 50,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.indigo.shade300,
+                        color: Color(ColorT.PrimaryColor),
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(25),
                           topLeft: Radius.circular(25),
@@ -68,7 +70,7 @@ class _AssignTaskState extends State<AssignTask> {
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          color: Colors.indigo.shade300,
+                          color: Color(ColorT.PrimaryColor),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(25),
                             bottomRight: Radius.circular(25),
@@ -194,7 +196,7 @@ class _AssignTaskState extends State<AssignTask> {
                               height: 50,
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                  color: Colors.indigo.shade300,
+                                  color: Color(ColorT.PrimaryColor),
                                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),
                                       bottomRight: Radius.circular(25),
                                   )

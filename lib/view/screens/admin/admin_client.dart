@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/colors.dart';
+
 class AdClient extends StatefulWidget {
   const AdClient({Key? key}) : super(key: key);
 
@@ -53,16 +55,17 @@ class _AdClientState extends State<AdClient> {
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/card.jpg"), fit: BoxFit.fill),
+              image: AssetImage("assets/client bg.jpeg"), fit: BoxFit.fill),
           border: Border.all(
-            color: Colors.indigo.shade700,
+            color: Color(ColorT.PrimaryColor),
           ),
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
-        child: Text(
-          "Client Name",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          textAlign: TextAlign.left,
+        child: Center(
+          child: Text(
+            "Client Name",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
         ),
       ),
     );

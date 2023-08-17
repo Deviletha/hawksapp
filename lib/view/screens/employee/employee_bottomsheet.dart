@@ -4,6 +4,7 @@ import 'package:hawksApp/view/screens/employee/employee_profile.dart';
 import 'package:hawksApp/view/screens/employee/employee_completed.dart';
 import 'package:hawksApp/view/screens/employee/employee_pending.dart';
 import 'package:hawksApp/view/screens/employee/employee_view.dart';
+import 'package:hawksApp/view/theme/colors.dart';
 import 'package:iconsax/iconsax.dart';
 
 class EmployeeBottomSheet extends StatefulWidget {
@@ -15,7 +16,20 @@ class EmployeeBottomSheet extends StatefulWidget {
 
 class _EmployeeBottomSheetState extends State<EmployeeBottomSheet> {
   int _currentIndex = 0;
-  List body = <Widget>[EmployeePage(),EmplCompleted(),EmplPending(),EmplProfile(),];
+  List body = <Widget>[EmployeePage(), EmplCompleted(), EmplPending(), EmplProfile()];
+
+  Color getSelectedBackgroundColor(int index) {
+    if (index == 0) {
+      return Color(ColorT.PrimaryColor);
+    } else if (index == 1) {
+      return Colors.green.shade300;
+    } else if (index == 2) {
+      return Colors.red.shade300;
+    } else if (index == 3) {
+      return Color(ColorT.PrimaryColor);
+    }
+    return Colors.transparent; // Default color
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,22 +47,22 @@ class _EmployeeBottomSheetState extends State<EmployeeBottomSheet> {
         },
         selectedLabelColor: Colors.white,
         unselectedLabelColor: Colors.grey,
-        selectedBackgroundColor: Colors.indigo.shade400,
-        unselectedBackgroundColor: Colors.indigo.shade50,
+        selectedBackgroundColor: getSelectedBackgroundColor(_currentIndex),
+        unselectedBackgroundColor: Colors.red.shade50,
         unselectedIconColor: Colors.grey.shade600,
         selectedIconColor: Colors.white,
         customBottomNavItems: [
           BorderBottomNavigationItems(
-            icon:Iconsax.task_square,
+            icon: Iconsax.task_square,
           ),
           BorderBottomNavigationItems(
-            icon:Iconsax.tick_circle,
+            icon: Iconsax.tick_circle,
           ),
           BorderBottomNavigationItems(
-            icon:Iconsax.info_circle,
+            icon: Iconsax.info_circle,
           ),
           BorderBottomNavigationItems(
-            icon:Iconsax.user,
+            icon: Iconsax.user,
           ),
         ],
       ),

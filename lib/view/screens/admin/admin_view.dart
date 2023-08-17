@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../theme/colors.dart';
 import '../../widgets/tasktext.dart';
 import 'admin_task.dart';
 import 'assign_task.dart';
@@ -14,26 +15,24 @@ class AdminView extends StatefulWidget {
 class _AdminViewState extends State<AdminView> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Task Information's"),
-          leading: IconButton(
-               icon: Icon(Iconsax.arrow_left), onPressed: () {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => AdminPage()));
-          },
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Task Information's"),
+        leading: IconButton(
+             icon: Icon(Iconsax.arrow_left), onPressed: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AdminPage()));
+        },
         ),
-        body: Center(
-          child: ListView.builder(
-            physics: ScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: 5,
-            itemBuilder: (context, index) => getTask(index),
-          ),
+      ),
+      body: Center(
+        child: ListView.builder(
+          physics: ScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: 5,
+          itemBuilder: (context, index) => getTask(index),
         ),
       ),
     );
@@ -60,7 +59,7 @@ class _AdminViewState extends State<AdminView> {
                 height: 50,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.indigo.shade300,
+                  color: Color(ColorT.PrimaryColor),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(25),
                     topLeft: Radius.circular(25),
@@ -88,7 +87,7 @@ class _AdminViewState extends State<AdminView> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Colors.indigo.shade300,
+                    color:Color(ColorT.PrimaryColor),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                       bottomRight: Radius.circular(25),
@@ -146,7 +145,7 @@ class _AdminViewState extends State<AdminView> {
               Container(
                 height: 50,
                 decoration: BoxDecoration(
-                    color: Colors.indigo.shade100,
+                    color: Colors.red.shade100,
                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),
                         bottomRight: Radius.circular(25))
                 ),

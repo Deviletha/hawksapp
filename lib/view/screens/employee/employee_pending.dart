@@ -54,7 +54,7 @@ class _EmplPendingState extends State<EmplPending> {
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: const [
                     Text("Task Title",  style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
