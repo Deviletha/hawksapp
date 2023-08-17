@@ -244,7 +244,7 @@ class _EmployeePageState extends State<EmployeePage> {
                 onChanged: (String? newValue) {
                   // Handle dropdown selection here
                 },
-                items: <String>['Start','In Progress','Pending', 'Completed','Stuck']
+                items: <String>['Start','In Progress','Pending', 'Completed','0n Hold']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
