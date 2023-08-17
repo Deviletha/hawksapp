@@ -80,14 +80,6 @@ class _EmployeePageState extends State<EmployeePage> {
               SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Text(
-                  "Task",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-              ),
-              Divider(),
               ListView.builder(
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
