@@ -26,7 +26,6 @@ ThemeData _buildTheme(brightness) {
         centerTitle: true, elevation: 0,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Color(ColorT.PrimaryColor),
-
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.light,
         ),),focusColor: Color(ColorT.PrimaryColor),primaryColor: Color(ColorT.PrimaryColor),

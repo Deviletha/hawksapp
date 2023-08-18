@@ -44,7 +44,7 @@ class _EmployeePageState extends State<EmployeePage> {
                           padding: const EdgeInsets.only(left: 15),
                           child: Column(mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: const [
                               Text(
                                 "Welcome",
                                 style:
@@ -162,7 +162,7 @@ class _EmployeePageState extends State<EmployeePage> {
                           height: 10,
                         ),
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children: const [
                             Text( "Project Name",style: TextStyle(
                               fontWeight: FontWeight.bold
                             ),),
@@ -190,7 +190,7 @@ class _EmployeePageState extends State<EmployeePage> {
                         ),),
                         Divider(),
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children: const [
                             Text("Start date :21/06/2023",
                               style: TextStyle(
                                   fontSize: 10,

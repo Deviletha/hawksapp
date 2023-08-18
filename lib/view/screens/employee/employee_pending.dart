@@ -95,7 +95,7 @@ class _EmplPendingState extends State<EmplPending> {
                         height: 10,
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Text( "Project Name",style: TextStyle(
                               fontWeight: FontWeight.bold
                           ),),
@@ -123,7 +123,7 @@ class _EmplPendingState extends State<EmplPending> {
                         ),),
                       Divider(),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Text("Start date :21/06/2023",
                             style: TextStyle(
                               fontSize: 10,

@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.red.shade100
                   ),
                   child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Icon(Icons.supervised_user_circle),
                       SizedBox(
                         width: 10,
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.brown.shade100
                   ),
                   child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Icon(Icons.admin_panel_settings),
                       SizedBox(
                         width: 10,

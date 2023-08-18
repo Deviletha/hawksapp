@@ -50,7 +50,7 @@ class _AdminPageState extends State<AdminPage> {
                         padding: const EdgeInsets.only(left: 15),
                         child: Column(mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               "Welcome",
                               style:
@@ -96,7 +96,7 @@ class _AdminPageState extends State<AdminPage> {
                           borderRadius: BorderRadius.all(Radius.circular(12))
                         ),
                         child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Icon(Iconsax.task),
                             SizedBox(
                               width: 8,
@@ -113,14 +113,6 @@ class _AdminPageState extends State<AdminPage> {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Text(
-                "Task",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-            ),
-            Divider(),
             ListView.builder(
               physics: ScrollPhysics(),
               shrinkWrap: true,
@@ -200,7 +192,7 @@ class _AdminPageState extends State<AdminPage> {
                         height: 10,
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Text( "Project Name",style: TextStyle(
                               fontWeight: FontWeight.bold
                           ),),

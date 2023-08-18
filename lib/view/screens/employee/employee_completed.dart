@@ -52,7 +52,7 @@ class _EmplCompletedState extends State<EmplCompleted> {
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: const [
                     Text("Task Title",  style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -93,7 +93,7 @@ class _EmplCompletedState extends State<EmplCompleted> {
                         height: 10,
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Text( "Project Name",style: TextStyle(
                               fontWeight: FontWeight.bold
                           ),),
@@ -121,7 +121,7 @@ class _EmplCompletedState extends State<EmplCompleted> {
                         ),),
                       Divider(),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Text("Started date :21/06/2023",
                             style: TextStyle(
                               fontSize: 10,

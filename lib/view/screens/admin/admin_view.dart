@@ -109,7 +109,7 @@ class _AdminViewState extends State<AdminView> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children: const [
                             Text( "Project Name",style: TextStyle(
                                 fontWeight: FontWeight.bold
                             ),),
@@ -152,7 +152,7 @@ class _AdminViewState extends State<AdminView> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Text(
                         "Employee Name : ", style: TextStyle(
                         fontWeight: FontWeight.bold,
