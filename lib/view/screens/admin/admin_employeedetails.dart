@@ -28,8 +28,6 @@ class _AdEmployeePageState extends State<AdEmployeePage> {
     super.initState();
   }
 
-
-
   apiForEmployee() async {
     var response =
     await ApiHelper().post(endpoint: "pagination", body: {
@@ -77,43 +75,35 @@ class _AdEmployeePageState extends State<AdEmployeePage> {
   Widget getEmployee (int index) {
     return   Padding(
       padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AdModules()));
-        },
-        child: Container(
-          height: MediaQuery.of(context).size.height / 4.8,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(ColorT.PrimaryColor),),
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            image: DecorationImage(
-                image: AssetImage("assets/employeebg.jpg"), fit: BoxFit.fill),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(finalEmployeeList![index]["name"].toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
-                Text(finalEmployeeList![index]["designation"].toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                Text("Department: ${finalEmployeeList![index]["department"]}",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                Text("Date of Joining: ${finalEmployeeList![index]["doj"]}",
-                  style: TextStyle(fontSize: 15),),
-                Text("Mobile No: ${finalEmployeeList![index]["contact"]}",
-                  style: TextStyle( fontSize: 15),),
-                Text("Email Id: ${finalEmployeeList![index]["email"]}",
-                  style: TextStyle( fontSize: 15),),
-                Text("Address: ${finalEmployeeList![index]["address"]}",
-                  style: TextStyle( fontSize: 15),),
-              ],
-            ),
+      child: Container(
+        height: MediaQuery.of(context).size.height / 4.8,
+        decoration: BoxDecoration(
+          border: Border.all(color: Color(ColorT.PrimaryColor),),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          image: DecorationImage(
+              image: AssetImage("assets/employeebg.jpg"), fit: BoxFit.fill),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(finalEmployeeList![index]["name"].toString(),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+              Text(finalEmployeeList![index]["designation"].toString(),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+              Text("Department: ${finalEmployeeList![index]["department"]}",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+              Text("Date of Joining: ${finalEmployeeList![index]["doj"]}",
+                style: TextStyle(fontSize: 15),),
+              Text("Mobile No: ${finalEmployeeList![index]["contact"]}",
+                style: TextStyle( fontSize: 15),),
+              Text("Email Id: ${finalEmployeeList![index]["email"]}",
+                style: TextStyle( fontSize: 15),),
+              Text("Address: ${finalEmployeeList![index]["address"]}",
+                style: TextStyle( fontSize: 15),),
+            ],
           ),
         ),
       ),

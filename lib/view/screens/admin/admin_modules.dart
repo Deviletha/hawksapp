@@ -1,16 +1,65 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../Config/ApiHelper.dart';
 import '../../theme/colors.dart';
 import 'admin_bottomsheet.dart';
 
 class AdModules extends StatefulWidget {
-  const AdModules({Key? key}) : super(key: key);
+  final String id;
+   const AdModules(
+      {Key? key,
+        required this.id,}) : super(key: key);
 
   @override
   State<AdModules> createState() => _AdModulesState();
 }
 
 class _AdModulesState extends State<AdModules> {
+
+  ///ModuleList
+  String? data;
+  Map? moduleList;
+  Map? moduleList1;
+  List? finaModuleList;
+
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    apiForModules();
+    super.initState();
+  }
+
+  apiForModules() async {
+    var response =
+    await ApiHelper().post(endpoint: "project/Modules", body: {
+      "project_id": widget.id,
+      "offset": "0",
+      "pageLimit": "50",
+    }).catchError((err) {});
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (response != null) {
+      setState(() {
+        debugPrint('get products api successful:');
+        data = response.toString();
+        moduleList = jsonDecode(response);
+        moduleList1 = moduleList!["pagination"];
+        finaModuleList = moduleList1!["pageDataModules"];
+
+        print(response);
+      });
+    } else {
+      debugPrint('api failed:');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,19 +74,21 @@ class _AdModulesState extends State<AdModules> {
         },
         ),
       ),
-      body: ListView.builder(
+      body:  isLoading
+          ? Center(child: CircularProgressIndicator(color: Color(ColorT.PrimaryColor),))
+          : ListView.builder(
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        itemCount: 5,
-        itemBuilder: (context, index) => subServices(index),
+        itemCount: finaModuleList == null ? 0 : finaModuleList?.length,
+              itemBuilder: (context, index) => getModules(index),
       ),
     );
   }
-  Widget subServices (int index) {
+  Widget getModules (int index) {
     return   Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: 150,
+        height: MediaQuery.of(context).size.height / 6,
         decoration: BoxDecoration(
           border: Border.all(color: Color(ColorT.PrimaryColor),),
           borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -47,10 +98,10 @@ class _AdModulesState extends State<AdModules> {
         child:Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Modules",
+              Text(finaModuleList![index]["module"].toString(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
-              Text("Module details",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+              Text(finaModuleList![index]["description"].toString(),
+                style: TextStyle(fontSize: 15),),
             ],
           ),
         ),
