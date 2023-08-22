@@ -62,9 +62,28 @@ class _AdClientState extends State<AdClient> {
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         child: Center(
-          child: Text(
-            "Client Name",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          child: Row( mainAxisAlignment: MainAxisAlignment.end,
+            children:  const [
+              Column(mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Client Name",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+                  Text("Client details",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                ],
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              CircleAvatar(
+                backgroundColor: Colors.grey,
+                radius: 45,
+                child: Center(child: Text("Client Logo")),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+            ],
           ),
         ),
       ),

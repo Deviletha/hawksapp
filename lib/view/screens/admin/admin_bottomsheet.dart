@@ -4,6 +4,7 @@ import 'package:hawksApp/view/screens/admin/admin_client.dart';
 import 'package:hawksApp/view/screens/admin/admin_projects.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../theme/colors.dart';
+import 'admin_employeedetails.dart';
 import 'admin_task.dart';
 
 
@@ -16,7 +17,7 @@ class AdminBottomSheet extends StatefulWidget {
 
 class _AdminBottomSheetState extends State<AdminBottomSheet> {
   int _currentIndex = 0;
-  List body = <Widget>[AdminPage(),AdProjects(),AdClient()];
+  List body = <Widget>[AdminPage(),AdEmployeePage(),AdProjects(),AdClient()];
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,9 @@ class _AdminBottomSheetState extends State<AdminBottomSheet> {
         customBottomNavItems: [
           BorderBottomNavigationItems(
             icon:Iconsax.task_square,
+          ),
+          BorderBottomNavigationItems(
+            icon:Iconsax.people,
           ),
           BorderBottomNavigationItems(
             icon:Iconsax.subtitle,

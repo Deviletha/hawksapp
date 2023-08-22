@@ -20,11 +20,11 @@ class _AdProjectsState extends State<AdProjects> {
         physics: ScrollPhysics(),
         shrinkWrap: true,
         itemCount: 10,
-        itemBuilder: (context, index) => services(index),
+        itemBuilder: (context, index) => Modules(index),
       ),
     );
   }
-  Widget services (int index) {
+  Widget Modules (int index) {
     return   Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
@@ -43,8 +43,14 @@ class _AdProjectsState extends State<AdProjects> {
                 image: AssetImage("assets/project_bg.jpeg"), fit: BoxFit.fill),
           ),
           child: Center(
-            child: Text("Projects Title",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+            child: Column(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Projects Title",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+                Text("Projects description",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+              ],
+            ),
           ),
         ),
       ),

@@ -46,14 +46,17 @@ class _EmployeePageState extends State<EmployeePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const [
                               Text(
-                                "Welcome",
+                                "Hello Employee",
                                 style:
-                                TextStyle(fontWeight: FontWeight.bold, fontSize: 35,color: Colors.white ),
+                                TextStyle(fontWeight: FontWeight.bold, fontSize: 28,color: Colors.white ),
+                              ),
+                              SizedBox(
+                                height: 8,
                               ),
                               Text(
-                                "Hawks Solutions",
+                                "Have a nice day!",
                                 style:
-                                TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
+                                TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),
                               ),
 
                             ],

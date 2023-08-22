@@ -44,10 +44,15 @@ class _AdModulesState extends State<AdModules> {
           image: DecorationImage(
               image: AssetImage("assets/module bg.jpeg"), fit: BoxFit.fill),
         ),
-        child: Center(
-          child: Text("Modules",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
+        child:Center(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Modules",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+              Text("Module details",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+            ],
+          ),
         ),
       ),
     );
