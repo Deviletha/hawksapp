@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../Config/ApiHelper.dart';
 import '../../theme/colors.dart';
 import 'admin_bottomsheet.dart';
+import 'admin_taskmodule_wise.dart';
 
 class AdModules extends StatefulWidget {
   final String id;
@@ -18,7 +18,7 @@ class AdModules extends StatefulWidget {
 
 class _AdModulesState extends State<AdModules> {
 
-  ///ModuleList
+  ///TaskList
   String? data;
   Map? moduleList;
   Map? moduleList1;
@@ -87,22 +87,35 @@ class _AdModulesState extends State<AdModules> {
   Widget getModules (int index) {
     return   Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: MediaQuery.of(context).size.height / 6,
-        decoration: BoxDecoration(
-          border: Border.all(color: Color(ColorT.PrimaryColor),),
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          image: DecorationImage(
-              image: AssetImage("assets/module bg.jpeg"), fit: BoxFit.fill),
-        ),
-        child:Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(finaModuleList![index]["module"].toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
-              Text(finaModuleList![index]["description"].toString(),
-                style: TextStyle(fontSize: 15),),
-            ],
+      child: InkWell(
+        onTap: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AdminTakModule(
+                    id: finaModuleList![index]["id"].toString(),
+                    position: index,
+                    moduleId: widget.id,
+
+                  )));
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height / 6,
+          decoration: BoxDecoration(
+            border: Border.all(color: Color(ColorT.PrimaryColor),),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            image: DecorationImage(
+                image: AssetImage("assets/module bg.jpeg"), fit: BoxFit.fill),
+          ),
+          child:Center(
+            child: Column(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(finaModuleList![index]["module"].toString(),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+                Text(finaModuleList![index]["description"].toString(),
+                  style: TextStyle(fontSize: 15),),
+              ],
+            ),
           ),
         ),
       ),

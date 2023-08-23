@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import '../../../Config/ApiHelper.dart';
 import '../../theme/colors.dart';
-import 'admin_modules.dart';
 
 class AdEmployeePage extends StatefulWidget {
   const AdEmployeePage({Key? key}) : super(key: key);
@@ -47,7 +45,6 @@ class _AdEmployeePageState extends State<AdEmployeePage> {
         employeeList = jsonDecode(response);
         employeeList1 = employeeList!["pagination"];
         finalEmployeeList = employeeList1!["pageData"];
-
         print(response);
       });
     } else {

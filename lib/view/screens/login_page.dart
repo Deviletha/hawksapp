@@ -30,6 +30,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    checkUser(); // Check for UID when the widget initializes.
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -144,12 +150,12 @@ class _LoginPageState extends State<LoginPage> {
                             textColor: Colors.white,
                             fontSize: 16.0,
                           );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AdminBottomSheet(),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => AdminBottomSheet(),
+                          //   ),
+                          // );
                         } else {
                           // API call succeeded but returned a failure response
                           debugPrint('API failed:');
@@ -184,6 +190,36 @@ class _LoginPageState extends State<LoginPage> {
                         textColor: Colors.white,
                         fontSize: 16.0,
                       );
+                    }
+                    if (UID != null && userList != null && userList!.isNotEmpty) {
+                      // Parse user type from the API response
+                      String userType = userList![0]["user_type"];
+                      // Navigate based on user type
+                      if (userType == "Administrator") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AdminBottomSheet(),
+                          ),
+                        );
+                      } else if (userType == "employee") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EmployeeBottomSheet(),
+                          ),
+                        );
+                      } else {
+                        // Handle unknown user type
+                        Fluttertoast.showToast(
+                          msg: "Unknown user type",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.SNACKBAR,
+                          timeInSecForIosWeb: 1,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(

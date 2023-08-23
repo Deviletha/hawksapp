@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hawksApp/view/screens/login_page.dart';
-import 'package:hawksApp/view/widgets/tasktext.dart';
 import 'package:iconsax/iconsax.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../theme/colors.dart';
 import 'add_task.dart';
 import 'admin_view.dart';
@@ -66,11 +66,20 @@ class _AdminPageState extends State<AdminPage> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+
+                          // Clear the user session data
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.remove("UID");
+                          Fluttertoast.showToast(
+                            msg: "Logged out",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.SNACKBAR,
+                            timeInSecForIosWeb: 1,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
                         },
                         icon: Icon(
                           Icons.power_settings_new_outlined,

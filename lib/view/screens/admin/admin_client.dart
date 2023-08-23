@@ -102,15 +102,15 @@ class _AdClientState extends State<AdClient> {
         height: MediaQuery.of(context).size.height / 4.5,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/client bg.jpeg"), fit: BoxFit.fill),
+          // image: DecorationImage(
+          //     image: AssetImage("assets/client bg.jpeg"), fit: BoxFit.fill),
           border: Border.all(
             color: Color(ColorT.PrimaryColor),
           ),
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(right: 10, top: 10),
+          padding: const EdgeInsets.only(left: 30, right: 10, top: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.start,
