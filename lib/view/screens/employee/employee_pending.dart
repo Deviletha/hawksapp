@@ -41,7 +41,7 @@ class _EmplPendingState extends State<EmplPending> {
         child: Column(
           children: [
             Container(
-              height: 50,
+              height: MediaQuery.of(context).size.height / 15,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.red.shade300,
@@ -92,7 +92,7 @@ class _EmplPendingState extends State<EmplPending> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 10,
+                        height: 10
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [

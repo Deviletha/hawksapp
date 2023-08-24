@@ -21,7 +21,7 @@ class _EmplProfileState extends State<EmplProfile> {
       body: ListView(
         children: [
           Container(
-            height: 110,
+            height: MediaQuery.of(context).size.height / 6,
             decoration: BoxDecoration(
               // image: DecorationImage(
               //   image: AssetImage("assets/profilebg.jpeg"),fit: BoxFit.fill

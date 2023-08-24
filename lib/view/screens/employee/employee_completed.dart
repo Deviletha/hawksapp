@@ -39,7 +39,7 @@ class _EmplCompletedState extends State<EmplCompleted> {
         child: Column(
           children: [
             Container(
-              height: 50,
+              height: MediaQuery.of(context).size.height / 15,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.green.shade300,

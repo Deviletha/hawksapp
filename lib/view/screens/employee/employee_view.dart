@@ -111,7 +111,7 @@ class _EmployeePageState extends State<EmployeePage> {
           child: Column(
             children: [
               Container(
-                height: 50,
+                height: MediaQuery.of(context).size.height / 15,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Color(ColorT.PrimaryColor),
@@ -239,7 +239,7 @@ class _EmployeePageState extends State<EmployeePage> {
                 onChanged: (String? newValue) {
                   // Handle dropdown selection here
                 },
-                items: <String>['Start','In Progress','Pending', 'Completed','0n Hold']
+                items: <String>['Start','On Progress', 'Completed','0n Hold']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hawksApp/view/screens/admin/admin_view.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../theme/colors.dart';
+import 'admin_bottomsheet.dart';
 
 class AssignTask extends StatefulWidget {
   const AssignTask({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _AssignTaskState extends State<AssignTask> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AdminView()));
+                    builder: (context) => AdminBottomSheet()));
           },
           ),
         ),

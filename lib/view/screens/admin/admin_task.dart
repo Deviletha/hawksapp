@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:hawksApp/view/screens/login_page.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../theme/colors.dart';
 import 'add_task.dart';
-import 'admin_view.dart';
+import 'assign_task.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({Key? key}) : super(key: key);
@@ -34,7 +33,7 @@ class _AdminPageState extends State<AdminPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 220,
+              height:MediaQuery.of(context).size.height / 4.5,
               width: double.infinity,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(bottomRight: Radius.circular(25)
@@ -89,33 +88,6 @@ class _AdminPageState extends State<AdminPage> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AdminView()));
-                      },
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(12))
-                        ),
-                        child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(Iconsax.task),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text("Manage your task information"),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),
@@ -138,114 +110,136 @@ class _AdminPageState extends State<AdminPage> {
   Widget getTask(int index) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration:
-            BoxDecoration(
-                border: Border.all(color: Colors.grey, width: .2),
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(25))),
-        child: Column(
-          children: [
-            Container(
-              height: 50,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Color(ColorT.PrimaryColor),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(15),
-                  topLeft: Radius.circular(15),
-                  bottomLeft: Radius.circular(15),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text("Task Title",  style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Colors.white
-                    ),),
-                    Text("Assigned date: 21/06/2023",  style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.white
-                    ),),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
+      child: InkWell(
+        onTap: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AssignTask()));
+        },
+        child: Container(
+          decoration:
+          BoxDecoration(
+              border: Border.all(color: Colors.grey, width: .2),
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                width: double.infinity,
+                decoration: BoxDecoration(
                   color: Color(ColorT.PrimaryColor),
                   borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15),
                     topLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
-                    bottomLeft: Radius.circular(15),)
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                      bottomLeft: Radius.circular(15),
-                    )
+                    bottomLeft: Radius.circular(15),
+                  ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                    children:  [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text( "Project Name",style: TextStyle(
-                              fontWeight: FontWeight.bold
-                          ),),
-                          Text("Module title",style: TextStyle(
-                              fontWeight: FontWeight.bold
-                          ),),
-                          Divider(),
-                        ],
-                      ),
-                      Divider(),
-                      Text("There are many variations of passages of Lorem Ipsum available,"
-                          " but the majority have suffered alteration in some form, "
-                          "by injected humour, or randomised words which don't look"
-                          " even slightly believable. If you are going to use a passage "
-                          "of Lorem Ipsum, you need to be sure there isn't anything embarrassing "
-                          "hidden in the middle of text. All the Lorem Ipsum generators on the "
-                          "Internet tend to repeat predefined chunks as necessary, making this "
-                          "the first true generator on the Internet. It uses a dictionary"
-                          " of over 200 Latin words, combined with a handful of model "
-                          "sentence structures, to generate Lorem Ipsum which looks reasonable."
-                          "The generated Lorem Ipsum is therefore always free"
-                          " from repetition, injected humour or non-characteristic words etc.",
-                        maxLines: 5,style: TextStyle(
-                            fontSize: 12, color: Colors.grey.shade900
-                        ),),
-                      Divider(),
-                      Text("Expected start date :21/06/2023",
-                        style: TextStyle(
-                          fontSize: 10,
-                        ),),
-                      Divider(),
-                      Text("Expected end date : 21/06/2023",
-                        style: TextStyle(
-                          fontSize: 10,
-                        ),),
-                      SizedBox(
-                        height: 10,
-                      )
+                  padding: const EdgeInsets.all(15),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text("Work Status",  style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Colors.white
+                      ),),
+                      Text("Assigned date: 21/06/2023",  style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Colors.white
+                      ),),
                     ],
                   ),
                 ),
               ),
-            ),
-          ],
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color:Color(ColorT.PrimaryColor),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),)
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(15),
+                      )
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column( crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text( "Project Name",style: TextStyle(
+                                fontWeight: FontWeight.bold
+                            ),),
+                            Text("Module title",style: TextStyle(
+                                fontWeight: FontWeight.bold
+                            ),),
+                            Divider(),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Task Description: It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+                          maxLines: 2,style: TextStyle(
+                              fontSize: 12, color: Colors.grey.shade900
+                          ),),
+                        Divider(),
+                        Text("Expected start date :21/06/2023",
+                          style: TextStyle(
+                            fontSize: 13,
+                          ),),
+                        Divider(),
+                        Text("Expected end date : 21/06/2023",
+                          style: TextStyle(
+                            fontSize: 13,
+                          ),),
+                        Divider(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height:MediaQuery.of(context).size.height / 18,
+                decoration: BoxDecoration(
+                    color: Colors.red.shade100,
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15))
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "Employee Name : ", style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                      ),
+                      Text(
+                        "Work status", style: TextStyle(
+                        fontSize: 15,
+                      ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -202,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                             builder: (context) => AdminBottomSheet(),
                           ),
                         );
-                      } else if (userType == "employee") {
+                      } else if (userType == "Employee") {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
