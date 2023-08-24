@@ -44,18 +44,18 @@ class _AssignTaskState extends State<AssignTask> {
                 BoxDecoration(
                     border: Border.all(color: Colors.grey, width: .2),
                     color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(25))),
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
                 child: Column(
                   children: [
                     Container(
-                      height: 50,
+                      height: MediaQuery.of(context).size.height / 15,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Color(ColorT.PrimaryColor),
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          topLeft: Radius.circular(25),
-                          bottomLeft: Radius.circular(25),
+                          topRight: Radius.circular(15),
+                          topLeft: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
                         ),
                       ),
                       child: Padding(
@@ -72,17 +72,17 @@ class _AssignTaskState extends State<AssignTask> {
                       decoration: BoxDecoration(
                           color: Color(ColorT.PrimaryColor),
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25),
-                            bottomRight: Radius.circular(25),
-                            bottomLeft: Radius.circular(25),)
+                            topLeft: Radius.circular(15),
+                            bottomRight: Radius.circular(15),
+                            bottomLeft: Radius.circular(15),)
                       ),
                       child: Container(
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(25),
-                              bottomRight: Radius.circular(25),
-                              bottomLeft: Radius.circular(25),
+                              topRight: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15),
                             )
                         ),
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,12 +193,12 @@ class _AssignTaskState extends State<AssignTask> {
                               ),
                             ),
                             Container(
-                              height: 50,
+                              height: MediaQuery.of(context).size.height / 15,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   color: Color(ColorT.PrimaryColor),
-                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),
-                                      bottomRight: Radius.circular(25),
+                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),
+                                      bottomRight: Radius.circular(15),
                                   )
                               ),
                               child: Padding(
