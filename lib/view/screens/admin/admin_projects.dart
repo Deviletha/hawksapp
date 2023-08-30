@@ -91,10 +91,11 @@ class _AdProjectsState extends State<AdProjects> {
             image: DecorationImage(
                 image: AssetImage("assets/project_bg.jpeg"), fit: BoxFit.fill),
           ),
-          child: ListView(
+          child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 10, top: 10, bottom: 5),
+                padding: const EdgeInsets.only(left: 40,right: 10, top: 10, bottom: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.start,

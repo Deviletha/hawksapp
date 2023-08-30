@@ -16,7 +16,7 @@ class EmployeeBottomSheet extends StatefulWidget {
 
 class _EmployeeBottomSheetState extends State<EmployeeBottomSheet> {
   int _currentIndex = 0;
-  List body = <Widget>[EmployeePage(), EmplCompleted(), EmplPending(), EmplProfile()];
+  List body = <Widget>[EmployeePage(), EmployeeCompleted(), EmployeePending(), EmployeeProfile()];
 
   Color getSelectedBackgroundColor(int index) {
     if (index == 0) {

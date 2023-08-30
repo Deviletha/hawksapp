@@ -1,14 +1,69 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class EmplCompleted extends StatefulWidget {
-  const EmplCompleted({Key? key}) : super(key: key);
+import '../../../Config/ApiHelper.dart';
+
+class EmployeeCompleted extends StatefulWidget {
+  const EmployeeCompleted({Key? key}) : super(key: key);
 
   @override
-  State<EmplCompleted> createState() => _EmplCompletedState();
+  State<EmployeeCompleted> createState() => _EmployeeCompletedState();
 }
 
-class _EmplCompletedState extends State<EmplCompleted> {
+class _EmployeeCompletedState extends State<EmployeeCompleted> {
+
+
+  /// ScheduleList
+  String? data;
+  Map? scheduleList;
+  Map? scheduleList1;
+  List? finalScheduleList;
+
+  String? UID;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    checkUser();
+    super.initState();
+  }
+
+  Future<void> checkUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      UID = prefs.getString("UID");
+      print("userid${UID!}");
+    });
+    apiForSchedules();
+  }
+
+  apiForSchedules() async {
+    var response = await ApiHelper()
+        .post(endpoint: "schedules/getEmployeeSchedules", body: {
+      "id": UID,
+    }).catchError((err) {});
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (response != null) {
+      setState(() {
+        debugPrint('get schedules api successful:');
+        data = response.toString();
+        scheduleList = jsonDecode(response);
+        scheduleList1 = scheduleList!["pagination"];
+        finalScheduleList = scheduleList1!["pageDataSchedules"];
+        print(response);
+      });
+    } else {
+      debugPrint('api failed:');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,11 +74,31 @@ class _EmplCompletedState extends State<EmplCompleted> {
         backgroundColor: Colors.green.shade300,
         title: Text("Completed Works"),
       ),
-      body:   ListView.builder(
+      body:  isLoading
+          ? Center(
+        child: CircularProgressIndicator(
+          color: Colors.green.shade300,
+        ),
+      )
+          : finalScheduleList == null
+          ? Center(
+        child: CircularProgressIndicator(
+          color: Colors.green.shade300,
+        ),
+      )
+          :  ListView.builder(
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        itemCount: 5,
-        itemBuilder: (context, index) => getCompletedTask(index),
+        itemCount: finalScheduleList!.length,
+        itemBuilder: (context, index) {
+          // Check if the schedule_status is 0
+          if (finalScheduleList![index]["schedule_status"] == 3) {
+            return getCompletedTask(index);
+          } else {
+            // If schedule_status is not 0, return an empty container or null
+            return SizedBox.shrink();
+          }
+        },
       ),
     );
   }
@@ -39,7 +114,7 @@ class _EmplCompletedState extends State<EmplCompleted> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height / 15,
+              height: MediaQuery.of(context).size.height / 16,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.green.shade300,
@@ -52,13 +127,14 @@ class _EmplCompletedState extends State<EmplCompleted> {
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text("Task Title",  style: TextStyle(
+                  children:  [
+                    Text(finalScheduleList![index]["task_name"].toString(),
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                         color: Colors.white
                     ),),
-                    Text("Assigned date: 21/06/2023",  style: TextStyle(
+                    Text("Assigned Date:${finalScheduleList![index]["assigned_date"]}", style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
                         color: Colors.white
@@ -87,46 +163,39 @@ class _EmplCompletedState extends State<EmplCompleted> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),
-                  child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                         height: 10,
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text( "Project Name",style: TextStyle(
+                        children:  [
+                          Text(finalScheduleList![index]["project"].toString(),
+                            style: TextStyle(
                               fontWeight: FontWeight.bold
                           ),),
-                          Text("Module title",style: TextStyle(
+                          Text( finalScheduleList![index]["module"].toString(),
+                            style: TextStyle(
                               fontWeight: FontWeight.bold
                           ),),
                           Divider(),
                         ],
                       ),
                       Divider(),
-                      Text("There are many variations of passages of Lorem Ipsum available,"
-                          " but the majority have suffered alteration in some form, "
-                          "by injected humour, or randomised words which don't look"
-                          " even slightly believable. If you are going to use a passage "
-                          "of Lorem Ipsum, you need to be sure there isn't anything embarrassing "
-                          "hidden in the middle of text. All the Lorem Ipsum generators on the "
-                          "Internet tend to repeat predefined chunks as necessary, making this "
-                          "the first true generator on the Internet. It uses a dictionary"
-                          " of over 200 Latin words, combined with a handful of model "
-                          "sentence structures, to generate Lorem Ipsum which looks reasonable."
-                          "The generated Lorem Ipsum is therefore always free"
-                          " from repetition, injected humour or non-characteristic words etc.",
+                      Text(
+                          finalScheduleList![index]["description"].toString(),
                         maxLines: 5,style: TextStyle(
                             fontSize: 12, color: Colors.grey.shade900
                         ),),
                       Divider(),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text("Started date :21/06/2023",
+                        children:  [
+                          Text( "Started Date: ${finalScheduleList![index]["actual_start_date"]}",
                             style: TextStyle(
                               fontSize: 10,
                             ),),
-                          Text("Completed date: 21/06/2023",
+                          Text("Completed Date: ${finalScheduleList![index]["actual_end_date"]}",
                             style: TextStyle(
                               fontSize: 10,
                             ),),

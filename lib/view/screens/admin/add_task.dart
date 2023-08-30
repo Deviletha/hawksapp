@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/colors.dart';
+
 class AddTask extends StatefulWidget {
   const AddTask({Key? key}) : super(key: key);
 
@@ -22,13 +24,13 @@ class _AddTaskState extends State<AddTask> {
       body: ListView(
         children: [
           Container(
-            height: 120,
+            height: MediaQuery.of(context).size.height / 5.5,
             width: double.infinity,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(25),
                     bottomLeft: Radius.circular(25)),
-                color: Colors.indigo.shade300),
+                color: Color(ColorT.PrimaryColor),),
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
