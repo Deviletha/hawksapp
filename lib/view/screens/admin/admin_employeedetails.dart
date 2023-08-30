@@ -45,7 +45,6 @@ class _AdEmployeePageState extends State<AdEmployeePage> {
         employeeList = jsonDecode(response);
         employeeList1 = employeeList!["pagination"];
         finalEmployeeList = employeeList1!["pageData"];
-        print(response);
       });
     } else {
       debugPrint('api failed:');

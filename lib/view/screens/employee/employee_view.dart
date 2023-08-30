@@ -72,13 +72,12 @@ class _EmployeePageState extends State<EmployeePage> {
         data = response.toString();
         profileList = jsonDecode(response);
         finalProfileList = profileList!["result"];
-        print(response);
       });
     } else {
       debugPrint('api failed:');
     }
   }
-  // Inside your initState function, after fetching the schedule data, extract project and module options
+
   apiForSchedules() async {
     var response = await ApiHelper()
         .post(endpoint: "schedules/getEmployeeSchedules", body: {
@@ -96,11 +95,7 @@ class _EmployeePageState extends State<EmployeePage> {
         scheduleList = jsonDecode(response);
         scheduleList1 = scheduleList!["pagination"];
         finalScheduleList = scheduleList1!["pageDataSchedules"];
-
-        // Call a function to extract project and module options
         extractProjectAndModuleOptions();
-
-        print(response);
       });
     } else {
       debugPrint('api failed:');
@@ -128,7 +123,6 @@ class _EmployeePageState extends State<EmployeePage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       UID = prefs.getString("UID");
-      print("userid${UID!}");
     });
     apiForSchedules();
     apiForProfile();
@@ -509,121 +503,119 @@ class _EmployeePageState extends State<EmployeePage> {
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: ListView(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      'Select Status',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListView(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'Select Status',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 16),
+                  DropdownButton<String>(
+                    borderRadius: BorderRadius.circular(15),
+                    value: selectedStatus,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedStatus = newValue!;
+                      });
+                    },
+                    items: availableStatuses.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(height: 16),
+                  TextFormField(
+                    maxLines: 5,
+                    controller: _descriptionController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      labelText: "Give description about status",
                     ),
-                    SizedBox(height: 16),
-                    DropdownButton<String>(
-                      borderRadius: BorderRadius.circular(15),
-                      value: selectedStatus,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedStatus = newValue!;
-                        });
-                      },
-                      items: availableStatuses.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    textInputAction: TextInputAction.next,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      selectImage();
+                    },
+                    icon: Icon(
+                      Icons.add_a_photo,
+                      color: Colors.teal[900],
+                      size: 30,
                     ),
-                    SizedBox(height: 16),
-                    TextFormField(
-                      maxLines: 5,
-                      controller: _descriptionController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        labelText: "Give description about status",
-                      ),
-                      textInputAction: TextInputAction.next,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        selectImage();
-                      },
-                      icon: Icon(
-                        Icons.add_a_photo,
-                        color: Colors.teal[900],
-                        size: 30,
-                      ),
-                    ),
-                    _pickedImage != null
-                        ? Container(
-                            height: 150,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: FileImage(
-                                      _pickedImage!,
-                                    ),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
-                                border: Border.all(color: Colors.grey)),
-                          )
-                        : Container(
-                            height: 150,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      "assets/hawks-logo.png",
-                                    ),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
-                                border: Border.all(color: Colors.grey)),
-                          ),
-                    ElevatedButton(
-                      onPressed: () {
-                        int statusValue;
-                        switch (selectedStatus) {
-                          case "Start":
-                            statusValue = 1;
-                            break;
-                          case "Ongoing":
-                            statusValue = 2;
-                            break;
-                          case "Done":
-                            statusValue = 5;
-                            break;
-                          case "On Hold":
-                            statusValue = 4;
-                            break;
-                          case "Approved":
-                            statusValue = 6;
-                            break;
-                          case "Rejected":
-                            statusValue = 7;
-                            break;
-                          default:
-                            statusValue = 1; // Default to "Start"
-                            break;
-                        }
-                        updateScheduleStatusApi(statusValue, SCHEDULEID!);
-                        Navigator.pop(context); // Close the bottom sheet
-                      },
-                      child: Text('Submit'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  _pickedImage != null
+                      ? Container(
+                          height: 150,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: FileImage(
+                                    _pickedImage!,
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              border: Border.all(color: Colors.grey)),
+                        )
+                      : Container(
+                          height: 150,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    "assets/hawks-logo.png",
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              border: Border.all(color: Colors.grey)),
+                        ),
+                  ElevatedButton(
+                    onPressed: () {
+                      int statusValue;
+                      switch (selectedStatus) {
+                        case "Start":
+                          statusValue = 1;
+                          break;
+                        case "Ongoing":
+                          statusValue = 2;
+                          break;
+                        case "Done":
+                          statusValue = 5;
+                          break;
+                        case "On Hold":
+                          statusValue = 4;
+                          break;
+                        case "Approved":
+                          statusValue = 6;
+                          break;
+                        case "Rejected":
+                          statusValue = 7;
+                          break;
+                        default:
+                          statusValue = 1; // Default to "Start"
+                          break;
+                      }
+                      updateScheduleStatusApi(statusValue, SCHEDULEID!);
+                      Navigator.pop(context); // Close the bottom sheet
+                    },
+                    child: Text('Submit'),
+                  ),
+                ],
+              ),
+            ],
           ),
         );
       },

@@ -52,7 +52,6 @@ class _AdminTakModuleState extends State<AdminTakModule> {
         taskList1 = taskList!["tasks"];
         finalModuleTaskList = taskList1!["pageData"];
         finalTaskList = finalModuleTaskList![0]["tasks"];
-        print(finalTaskList);
       });
     } else {
       debugPrint('api failed:');

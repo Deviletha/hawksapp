@@ -77,7 +77,6 @@ class _AdminPageState extends State<AdminPage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       UID = prefs.getString("UID");
-      print("userid${UID!}");
     });
   }
 

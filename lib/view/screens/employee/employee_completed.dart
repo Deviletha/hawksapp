@@ -35,7 +35,6 @@ class _EmployeeCompletedState extends State<EmployeeCompleted> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       UID = prefs.getString("UID");
-      print("userid${UID!}");
     });
     apiForSchedules();
   }
@@ -57,7 +56,6 @@ class _EmployeeCompletedState extends State<EmployeeCompleted> {
         scheduleList = jsonDecode(response);
         scheduleList1 = scheduleList!["pagination"];
         finalScheduleList = scheduleList1!["pageDataSchedules"];
-        print(response);
       });
     } else {
       debugPrint('api failed:');

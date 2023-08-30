@@ -58,7 +58,6 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
         data = response.toString();
         profileList = jsonDecode(response);
         finalProfileList = profileList!["result"];
-        print(response);
       });
     } else {
       debugPrint('api failed:');

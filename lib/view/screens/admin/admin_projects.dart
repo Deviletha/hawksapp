@@ -46,8 +46,6 @@ class _AdProjectsState extends State<AdProjects> {
         projectList = jsonDecode(response);
         projectList1 = projectList!["pagination"];
         finalProjectList = projectList1!["pageDataProjects"];
-
-        print(response);
       });
     } else {
       debugPrint('api failed:');

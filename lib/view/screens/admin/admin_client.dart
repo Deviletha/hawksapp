@@ -46,8 +46,6 @@ class _AdClientState extends State<AdClient> {
         clientList = jsonDecode(response);
         clientList1 = clientList!["pagination"];
         finalClientList = clientList1!["pageDataProjects"];
-
-        print(response);
       });
     } else {
       debugPrint('api failed:');

@@ -51,8 +51,6 @@ class _AdModulesState extends State<AdModules> {
         moduleList = jsonDecode(response);
         moduleList1 = moduleList!["pagination"];
         finaModuleList = moduleList1!["pageDataModules"];
-
-        print(response);
       });
     } else {
       debugPrint('api failed:');
