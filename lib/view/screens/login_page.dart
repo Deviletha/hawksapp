@@ -150,12 +150,6 @@ class _LoginPageState extends State<LoginPage> {
                             textColor: Colors.white,
                             fontSize: 16.0,
                           );
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => AdminBottomSheet(),
-                          //   ),
-                          // );
                         } else {
                           // API call succeeded but returned a failure response
                           debugPrint('API failed:');
