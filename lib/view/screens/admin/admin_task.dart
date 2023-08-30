@@ -9,7 +9,6 @@ import '../../../Config/ApiHelper.dart';
 import '../../theme/colors.dart';
 import 'add_task.dart';
 
-
 class AdminPage extends StatefulWidget {
   const AdminPage({Key? key}) : super(key: key);
 
@@ -18,7 +17,6 @@ class AdminPage extends StatefulWidget {
 }
 
 class _AdminPageState extends State<AdminPage> {
-
   final _descriptionController = TextEditingController();
 
   /// ScheduleList
@@ -39,10 +37,12 @@ class _AdminPageState extends State<AdminPage> {
 
   String selectedProject = "All"; // Default project value
   String selectedModule = "All"; // Default module value
-  List<String> projectOptions = ["All"]; // Initialize with "All" as the default option
-  List<String> moduleOptions = ["All"]; // Initialize with "All" as the default option
-
-
+  List<String> projectOptions = [
+    "All"
+  ]; // Initialize with "All" as the default option
+  List<String> moduleOptions = [
+    "All"
+  ]; // Initialize with "All" as the default option
 
   @override
   void initState() {
@@ -68,8 +68,6 @@ class _AdminPageState extends State<AdminPage> {
     }
   }
 
-
-
   Future<void> checkUser() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -84,7 +82,7 @@ class _AdminPageState extends State<AdminPage> {
   void convertImageToBase64() async {
     if (_pickedImage != null) {
       final bytes = await _pickedImage!.readAsBytes();
-      final String base64Image =  "data:image/;base64,${base64Encode(bytes)}";
+      final String base64Image = "data:image/;base64,${base64Encode(bytes)}";
       setState(() {
         base64Images.add(base64Image);
       });
@@ -93,7 +91,7 @@ class _AdminPageState extends State<AdminPage> {
 
   void selectImage() async {
     final pickedImage =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
         _pickedImage = File(pickedImage.path);
@@ -128,7 +126,7 @@ class _AdminPageState extends State<AdminPage> {
 
   apiForSchedules() async {
     var response =
-    await ApiHelper().post(endpoint: "schedules/Schedules", body: {
+        await ApiHelper().post(endpoint: "schedules/Schedules", body: {
       "offset": "0",
       "pageLimit": "50",
     }).catchError((err) {});
@@ -150,7 +148,6 @@ class _AdminPageState extends State<AdminPage> {
       debugPrint('api failed:');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -246,9 +243,11 @@ class _AdminPageState extends State<AdminPage> {
                 children: [
                   DropdownButton<String>(
                     value: selectedProject,
-                    onChanged: (String? newValue) { // Update parameter type to String?
+                    onChanged: (String? newValue) {
+                      // Update parameter type to String?
                       setState(() {
-                        selectedProject = newValue ?? "All"; // Use null check operator and provide a default value
+                        selectedProject = newValue ??
+                            "All"; // Use null check operator and provide a default value
                       });
                     },
                     items: projectOptions.map((String project) {
@@ -258,12 +257,13 @@ class _AdminPageState extends State<AdminPage> {
                       );
                     }).toList(),
                   ),
-
                   DropdownButton<String>(
                     value: selectedModule,
-                    onChanged: (String? newValue) { // Update parameter type to String?
+                    onChanged: (String? newValue) {
+                      // Update parameter type to String?
                       setState(() {
-                        selectedModule = newValue ?? "All"; // Use null check operator and provide a default value
+                        selectedModule = newValue ??
+                            "All"; // Use null check operator and provide a default value
                       });
                     },
                     items: moduleOptions.map((String module) {
@@ -273,30 +273,35 @@ class _AdminPageState extends State<AdminPage> {
                       );
                     }).toList(),
                   ),
-
                 ],
               ),
             ),
             isLoading
                 ? Center(
-                child: CircularProgressIndicator(
-                  color: Color(ColorT.PrimaryColor),
-                ))
+                    child: CircularProgressIndicator(
+                    color: Color(ColorT.PrimaryColor),
+                  ))
                 : ListView.builder(
-              physics: ScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: finalScheduleList == null ? 0 : finalScheduleList?.length,
-              itemBuilder: (context, index) {
-                // Check if the task matches the selected project and module
-                if ((selectedProject == "All" || finalScheduleList![index]["project"].toString() == selectedProject) &&
-                    (selectedModule == "All" || finalScheduleList![index]["module"].toString() == selectedModule)) {
-                  return getTask(index);
-                } else {
-                  // Return an empty container for tasks that don't match the filters
-                  return Container();
-                }
-              },
-            ),
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: finalScheduleList == null
+                        ? 0
+                        : finalScheduleList?.length,
+                    itemBuilder: (context, index) {
+                      // Check if the task matches the selected project and module
+                      if ((selectedProject == "All" ||
+                              finalScheduleList![index]["project"].toString() ==
+                                  selectedProject) &&
+                          (selectedModule == "All" ||
+                              finalScheduleList![index]["module"].toString() ==
+                                  selectedModule)) {
+                        return getTask(index);
+                      } else {
+                        // Return an empty container for tasks that don't match the filters
+                        return Container();
+                      }
+                    },
+                  ),
           ],
         ),
       ]),
@@ -361,7 +366,8 @@ class _AdminPageState extends State<AdminPage> {
                             fontSize: 15,
                             color: Colors.white),
                       ),
-                      Text("Assigned Date: ${finalScheduleList![index]["assigned_date"]}",
+                      Text(
+                        "Assigned Date: ${finalScheduleList![index]["assigned_date"]}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
@@ -500,12 +506,8 @@ class _AdminPageState extends State<AdminPage> {
                         selectedStatus = newValue!;
                       });
                     },
-                    items: <String>[
-                      'Start',
-                      'Ongoing',
-                      'Completed',
-                      'On Hold'
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: <String>['Start', 'Ongoing', 'Completed', 'On Hold']
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -538,31 +540,31 @@ class _AdminPageState extends State<AdminPage> {
                   ),
                   _pickedImage != null
                       ? Container(
-                    height: 100,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: FileImage(
-                              _pickedImage!,
-                            ),
-                            fit: BoxFit.cover),
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(15)),
-                        border: Border.all(color: Colors.grey)),
-                  )
+                          height: 100,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: FileImage(
+                                    _pickedImage!,
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              border: Border.all(color: Colors.grey)),
+                        )
                       : Container(
-                    height: 100,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                              "assets/hawks-logo.png",
-                            ),
-                            fit: BoxFit.cover),
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(15)),
-                        border: Border.all(color: Colors.grey)),
-                  ),
+                          height: 100,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    "assets/hawks-logo.png",
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              border: Border.all(color: Colors.grey)),
+                        ),
                   ElevatedButton(
                     onPressed: () {
                       int statusValue;

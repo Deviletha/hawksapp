@@ -27,10 +27,11 @@ class _AddTaskState extends State<AddTask> {
             height: MediaQuery.of(context).size.height / 5.5,
             width: double.infinity,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(25),
-                    bottomLeft: Radius.circular(25)),
-                color: Color(ColorT.PrimaryColor),),
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(25)),
+              color: Color(ColorT.PrimaryColor),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(

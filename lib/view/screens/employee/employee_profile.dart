@@ -102,7 +102,7 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
             ),
           ),
           ProfileRow(icon: Iconsax.user,title:finalProfileList![index]["name"].toString(),),
-          ProfileRow(icon: Iconsax.designtools,title:finalProfileList![index]["designation"].toString(),),
+          ProfileRow(icon: Iconsax.designtools,title:finalProfileList![index]["Desigvalue"].toString(),),
           ProfileRow(icon: Iconsax.sms,title:finalProfileList![index]["email"].toString(),),
           ProfileRow(icon: Iconsax.call,title:finalProfileList![index]["contact"].toString(),),
           ProfileRow(icon: Iconsax.home,title:finalProfileList![index]["address"].toString(),),

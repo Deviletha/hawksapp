@@ -28,7 +28,7 @@ class _AdEmployeePageState extends State<AdEmployeePage> {
 
   apiForEmployee() async {
     var response =
-    await ApiHelper().post(endpoint: "pagination", body: {
+    await ApiHelper().post(endpoint: "employee", body: {
       "table": "employees",
       "offset": "0",
       "pageLimit": "50",
@@ -88,9 +88,9 @@ class _AdEmployeePageState extends State<AdEmployeePage> {
             children: [
               Text(finalEmployeeList![index]["name"].toString(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
-              Text(finalEmployeeList![index]["designation"].toString(),
+              Text(finalEmployeeList![index]["value"].toString(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-              Text("Department: ${finalEmployeeList![index]["department"]}",
+              Text(finalEmployeeList![index]["department_name"].toString(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
               Text("Date of Joining: ${finalEmployeeList![index]["doj"]}",
                 style: TextStyle(fontSize: 15),),

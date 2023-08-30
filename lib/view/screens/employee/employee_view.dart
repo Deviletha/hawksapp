@@ -16,7 +16,6 @@ class EmployeePage extends StatefulWidget {
 }
 
 class _EmployeePageState extends State<EmployeePage> {
-
   final _descriptionController = TextEditingController();
 
   /// ScheduleList
@@ -39,10 +38,12 @@ class _EmployeePageState extends State<EmployeePage> {
   // Add these variables at the top of your _EmployeePageState class
   String selectedProject = "All"; // Default project value
   String selectedModule = "All"; // Default module value
-  List<String> projectOptions = ["All"]; // Initialize with "All" as the default option
-  List<String> moduleOptions = ["All"]; // Initialize with "All" as the default option
-
-
+  List<String> projectOptions = [
+    "All"
+  ]; // Initialize with "All" as the default option
+  List<String> moduleOptions = [
+    "All"
+  ]; // Initialize with "All" as the default option
 
   @override
   void initState() {
@@ -52,7 +53,8 @@ class _EmployeePageState extends State<EmployeePage> {
 
   // Inside your initState function, after fetching the schedule data, extract project and module options
   apiForSchedules() async {
-    var response = await ApiHelper().post(endpoint: "schedules/getEmployeeSchedules", body: {
+    var response = await ApiHelper()
+        .post(endpoint: "schedules/getEmployeeSchedules", body: {
       "id": UID,
     }).catchError((err) {});
 
@@ -178,7 +180,6 @@ class _EmployeePageState extends State<EmployeePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
@@ -188,292 +189,303 @@ class _EmployeePageState extends State<EmployeePage> {
       ),
       body: isLoading
           ? Center(
-        child: CircularProgressIndicator(
-          color: Color(ColorT.PrimaryColor),
-        ),
-      )
+              child: CircularProgressIndicator(
+                color: Color(ColorT.PrimaryColor),
+              ),
+            )
           : finalScheduleList == null
-          ? Center(
-        child: CircularProgressIndicator(
-          color: Color(ColorT.PrimaryColor),
-        ),
-      )
-          :
-      ListView(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height:  MediaQuery.of(context).size.height / 6.5,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(25),
-                      bottomLeft: Radius.circular(25)),
-                  color: Color(ColorT.PrimaryColor),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: Color(ColorT.PrimaryColor),
+                  ),
+                )
+              : ListView(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15),
+                        Container(
+                          height: MediaQuery.of(context).size.height / 6.5,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(25),
+                                bottomLeft: Radius.circular(25)),
+                            color: Color(ColorT.PrimaryColor),
+                          ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Hello ${finalScheduleList![index]["employeeName"]}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 28,
-                                    color: Colors.white),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text(
-                                "Have a nice day!",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    color: Colors.white),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Hello ${finalScheduleList![index]["employeeName"]}",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 28,
+                                              color: Colors.white),
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          "Have a nice day!",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()));
+                                    },
+                                    icon: Icon(
+                                      Icons.power_settings_new_outlined,
+                                      size: 30,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
-                          },
-                          icon: Icon(
-                            Icons.power_settings_new_outlined,
-                            size: 30,
-                            color: Colors.white,
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15, bottom: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DropdownButton<String>(
+                                value: selectedProject,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedProject = newValue ??
+                                        "All"; // Use null check operator and provide a default value
+                                  });
+                                },
+                                items: projectOptions.map((String project) {
+                                  return DropdownMenuItem<String>(
+                                    value: project,
+                                    child: Text(project),
+                                  );
+                                }).toList(),
+                              ),
+                              DropdownButton<String>(
+                                value: selectedModule,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedModule = newValue ??
+                                        "All"; // Use null check operator and provide a default value
+                                  });
+                                },
+                                items: moduleOptions.map((String module) {
+                                  return DropdownMenuItem<String>(
+                                    value: module,
+                                    child: Text(module),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
                           ),
                         ),
+                        isLoading
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Color(ColorT.PrimaryColor),
+                                ),
+                              )
+                            : finalScheduleList == null
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                      color: Color(ColorT.PrimaryColor),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    physics: ScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: finalScheduleList?.length ?? 0,
+                                    itemBuilder: (context, index) =>
+                                        getTask(index),
+                                  ),
                       ],
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(left: 15, bottom: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DropdownButton<String>(
-                      value: selectedProject,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedProject = newValue ?? "All"; // Use null check operator and provide a default value
-                        });
-                      },
-                      items: projectOptions.map((String project) {
-                        return DropdownMenuItem<String>(
-                          value: project,
-                          child: Text(project),
-                        );
-                      }).toList(),
-                    ),
-
-                    DropdownButton<String>(
-                      value: selectedModule,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedModule = newValue ?? "All"; // Use null check operator and provide a default value
-                        });
-                      },
-                      items: moduleOptions.map((String module) {
-                        return DropdownMenuItem<String>(
-                          value: module,
-                          child: Text(module),
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
-              ),
-
-              isLoading
-                  ? Center(
-                child: CircularProgressIndicator(
-                  color: Color(ColorT.PrimaryColor),
-                ),
-              )
-                  : finalScheduleList == null
-                  ? Center(
-                child: CircularProgressIndicator(
-                  color: Color(ColorT.PrimaryColor),
-                ),
-              )
-                  :  ListView.builder(
-    physics: ScrollPhysics(),
-    shrinkWrap: true,
-    itemCount: finalScheduleList?.length ?? 0,
-    itemBuilder: (context, index) => getTask(index),
-    ),
-            ],
-          ),
-        ],
-      ),
     );
   }
-
 
   Widget getTask(int index) {
     // Filter tasks based on selectedProject and selectedModule
     bool shouldShowTask = true;
 
-    if (selectedProject != "All" && finalScheduleList![index]["project"].toString() != selectedProject) {
+    if (selectedProject != "All" &&
+        finalScheduleList![index]["project"].toString() != selectedProject) {
       shouldShowTask = false;
     }
 
-    if (selectedModule != "All" && finalScheduleList![index]["module"].toString() != selectedModule) {
+    if (selectedModule != "All" &&
+        finalScheduleList![index]["module"].toString() != selectedModule) {
       shouldShowTask = false;
     }
 
     // Return the task widget based on the filtering result
     return shouldShowTask
         ? Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: () {
-          SCHEDULEID = finalScheduleList![index]["id"].toString();
-          _showTaskBottomSheet();
-        },
-        child: Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey, width: .2),
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(15))),
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height / 16,
-                width: double.infinity,
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () {
+                SCHEDULEID = finalScheduleList![index]["id"].toString();
+                _showTaskBottomSheet();
+              },
+              child: Container(
                 decoration: BoxDecoration(
-                  color: Color(ColorT.PrimaryColor),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15),
-                    topLeft: Radius.circular(15),
-                    bottomLeft: Radius.circular(15),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        finalScheduleList![index]["task_name"].toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            color: Colors.white),
-                      ),
-                      Text(
-                        "Assigned Date: ${finalScheduleList![index]["assigned_date"]}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Color(ColorT.PrimaryColor),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                      bottomLeft: Radius.circular(15),
-                    )),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(15),
-                        bottomRight: Radius.circular(15),
-                        bottomLeft: Radius.circular(15),
-                      )),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 10,
+                    border: Border.all(color: Colors.grey, width: .2),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                child: Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height / 16,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Color(ColorT.PrimaryColor),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(15),
+                          topLeft: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
                         ),
-                        Row(
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              finalScheduleList![index]["project"].toString(),
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              finalScheduleList![index]["module"].toString(),
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Divider(),
-                          ],
-                        ),
-                        Divider(),
-                        Text(
-                          finalScheduleList![index]["description"].toString(),
-                          maxLines: 5,
-                          style: TextStyle(
-                              fontSize: 12, color: Colors.grey.shade900),
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Start Date: ${finalScheduleList![index]["expected_start_date"]}",
+                              finalScheduleList![index]["task_name"].toString(),
                               style: TextStyle(
-                                fontSize: 10,
-                              ),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.white),
                             ),
                             Text(
-                              "End Date: ${finalScheduleList![index]["expected_end_date"]}",
+                              "Assigned Date: ${finalScheduleList![index]["assigned_date"]}",
                               style: TextStyle(
-                                fontSize: 10,
-                              ),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  color: Colors.white),
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        )
-                      ],
+                      ),
                     ),
-                  ),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Color(ColorT.PrimaryColor),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            bottomRight: Radius.circular(15),
+                            bottomLeft: Radius.circular(15),
+                          )),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15),
+                            )),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    finalScheduleList![index]["project"]
+                                        .toString(),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    finalScheduleList![index]["module"]
+                                        .toString(),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Divider(),
+                                ],
+                              ),
+                              Divider(),
+                              Text(
+                                finalScheduleList![index]["description"]
+                                    .toString(),
+                                maxLines: 5,
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.grey.shade900),
+                              ),
+                              Divider(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Start Date: ${finalScheduleList![index]["expected_start_date"]}",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                  Text(
+                                    "End Date: ${finalScheduleList![index]["expected_end_date"]}",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    )
-        : SizedBox.shrink(); // If shouldShowTask is false, return an empty SizedBox
+            ),
+          )
+        : SizedBox
+            .shrink(); // If shouldShowTask is false, return an empty SizedBox
   }
-
 
   void _showTaskBottomSheet() {
     showModalBottomSheet<void>(
@@ -502,12 +514,8 @@ class _EmployeePageState extends State<EmployeePage> {
                         selectedStatus = newValue!;
                       });
                     },
-                    items: <String>[
-                      'Start',
-                      'Ongoing',
-                      'Done',
-                      'On Hold'
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: <String>['Start', 'Ongoing', 'Done', 'On Hold']
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -540,31 +548,31 @@ class _EmployeePageState extends State<EmployeePage> {
                   ),
                   _pickedImage != null
                       ? Container(
-                    height: 150,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: FileImage(
-                              _pickedImage!,
-                            ),
-                            fit: BoxFit.cover),
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(15)),
-                        border: Border.all(color: Colors.grey)),
-                  )
+                          height: 150,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: FileImage(
+                                    _pickedImage!,
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              border: Border.all(color: Colors.grey)),
+                        )
                       : Container(
-                    height: 150,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                              "assets/hawks-logo.png",
-                            ),
-                            fit: BoxFit.cover),
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(15)),
-                        border: Border.all(color: Colors.grey)),
-                  ),
+                          height: 150,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    "assets/hawks-logo.png",
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              border: Border.all(color: Colors.grey)),
+                        ),
                   ElevatedButton(
                     onPressed: () {
                       int statusValue;
