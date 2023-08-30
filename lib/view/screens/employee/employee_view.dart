@@ -36,10 +36,63 @@ class _EmployeePageState extends State<EmployeePage> {
 
   String selectedStatus = "Start"; // Default status
 
+  // Add these variables at the top of your _EmployeePageState class
+  String selectedProject = "All"; // Default project value
+  String selectedModule = "All"; // Default module value
+  List<String> projectOptions = ["All"]; // Initialize with "All" as the default option
+  List<String> moduleOptions = ["All"]; // Initialize with "All" as the default option
+
+
+
   @override
   void initState() {
     checkUser();
     super.initState();
+  }
+
+  // Inside your initState function, after fetching the schedule data, extract project and module options
+  apiForSchedules() async {
+    var response = await ApiHelper().post(endpoint: "schedules/getEmployeeSchedules", body: {
+      "id": UID,
+    }).catchError((err) {});
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (response != null) {
+      setState(() {
+        debugPrint('get schedules api successful:');
+        data = response.toString();
+        scheduleList = jsonDecode(response);
+        scheduleList1 = scheduleList!["pagination"];
+        finalScheduleList = scheduleList1!["pageDataSchedules"];
+
+        // Call a function to extract project and module options
+        extractProjectAndModuleOptions();
+
+        print(response);
+      });
+    } else {
+      debugPrint('api failed:');
+    }
+  }
+
+  void extractProjectAndModuleOptions() {
+    if (finalScheduleList != null) {
+      // Create sets to store unique project names and modules
+      Set<String> projectSet = Set<String>();
+      Set<String> moduleSet = Set<String>();
+
+      for (var schedule in finalScheduleList!) {
+        projectSet.add(schedule["project"].toString());
+        moduleSet.add(schedule["module"].toString());
+      }
+
+      // Convert sets to lists and add "All" as the default option
+      projectOptions = ["All", ...projectSet.toList()];
+      moduleOptions = ["All", ...moduleSet.toList()];
+    }
   }
 
   Future<void> checkUser() async {
@@ -99,33 +152,33 @@ class _EmployeePageState extends State<EmployeePage> {
     }
   }
 
-  apiForSchedules() async {
-    var response = await ApiHelper()
-        .post(endpoint: "schedules/getEmployeeSchedules", body: {
-      "id": UID,
-    }).catchError((err) {});
+  // apiForSchedules() async {
+  //   var response = await ApiHelper()
+  //       .post(endpoint: "schedules/getEmployeeSchedules", body: {
+  //     "id": UID,
+  //   }).catchError((err) {});
+  //
+  //   setState(() {
+  //     isLoading = false;
+  //   });
+  //
+  //   if (response != null) {
+  //     setState(() {
+  //       debugPrint('get schedules api successful:');
+  //       data = response.toString();
+  //       scheduleList = jsonDecode(response);
+  //       scheduleList1 = scheduleList!["pagination"];
+  //       finalScheduleList = scheduleList1!["pageDataSchedules"];
+  //       print(response);
+  //     });
+  //   } else {
+  //     debugPrint('api failed:');
+  //   }
+  // }
 
-    setState(() {
-      isLoading = false;
-    });
-
-    if (response != null) {
-      setState(() {
-        debugPrint('get schedules api successful:');
-        data = response.toString();
-        scheduleList = jsonDecode(response);
-        scheduleList1 = scheduleList!["pagination"];
-        finalScheduleList = scheduleList1!["pageDataSchedules"];
-        print(response);
-      });
-    } else {
-      debugPrint('api failed:');
-    }
-  }
-
-  @override
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
@@ -214,6 +267,45 @@ class _EmployeePageState extends State<EmployeePage> {
               SizedBox(
                 height: 20,
               ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 15, bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DropdownButton<String>(
+                      value: selectedProject,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedProject = newValue ?? "All"; // Use null check operator and provide a default value
+                        });
+                      },
+                      items: projectOptions.map((String project) {
+                        return DropdownMenuItem<String>(
+                          value: project,
+                          child: Text(project),
+                        );
+                      }).toList(),
+                    ),
+
+                    DropdownButton<String>(
+                      value: selectedModule,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedModule = newValue ?? "All"; // Use null check operator and provide a default value
+                        });
+                      },
+                      items: moduleOptions.map((String module) {
+                        return DropdownMenuItem<String>(
+                          value: module,
+                          child: Text(module),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              ),
+
               isLoading
                   ? Center(
                 child: CircularProgressIndicator(
@@ -226,12 +318,12 @@ class _EmployeePageState extends State<EmployeePage> {
                   color: Color(ColorT.PrimaryColor),
                 ),
               )
-                  : ListView.builder(
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 5,
-                itemBuilder: (context, index) => getTask(index),
-              ),
+                  :  ListView.builder(
+    physics: ScrollPhysics(),
+    shrinkWrap: true,
+    itemCount: finalScheduleList?.length ?? 0,
+    itemBuilder: (context, index) => getTask(index),
+    ),
             ],
           ),
         ],
@@ -241,7 +333,20 @@ class _EmployeePageState extends State<EmployeePage> {
 
 
   Widget getTask(int index) {
-    return Padding(
+    // Filter tasks based on selectedProject and selectedModule
+    bool shouldShowTask = true;
+
+    if (selectedProject != "All" && finalScheduleList![index]["project"].toString() != selectedProject) {
+      shouldShowTask = false;
+    }
+
+    if (selectedModule != "All" && finalScheduleList![index]["module"].toString() != selectedModule) {
+      shouldShowTask = false;
+    }
+
+    // Return the task widget based on the filtering result
+    return shouldShowTask
+        ? Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
@@ -278,7 +383,8 @@ class _EmployeePageState extends State<EmployeePage> {
                             fontSize: 15,
                             color: Colors.white),
                       ),
-                      Text("Assigned Date: ${finalScheduleList![index]["assigned_date"]}",
+                      Text(
+                        "Assigned Date: ${finalScheduleList![index]["assigned_date"]}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
@@ -315,7 +421,7 @@ class _EmployeePageState extends State<EmployeePage> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children:  [
+                          children: [
                             Text(
                               finalScheduleList![index]["project"].toString(),
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -337,14 +443,15 @@ class _EmployeePageState extends State<EmployeePage> {
                         Divider(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children:  [
+                          children: [
                             Text(
                               "Start Date: ${finalScheduleList![index]["expected_start_date"]}",
                               style: TextStyle(
                                 fontSize: 10,
                               ),
                             ),
-                            Text("End Date: ${finalScheduleList![index]["expected_end_date"]}",
+                            Text(
+                              "End Date: ${finalScheduleList![index]["expected_end_date"]}",
                               style: TextStyle(
                                 fontSize: 10,
                               ),
@@ -363,8 +470,10 @@ class _EmployeePageState extends State<EmployeePage> {
           ),
         ),
       ),
-    );
+    )
+        : SizedBox.shrink(); // If shouldShowTask is false, return an empty SizedBox
   }
+
 
   void _showTaskBottomSheet() {
     showModalBottomSheet<void>(

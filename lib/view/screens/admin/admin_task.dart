@@ -37,6 +37,12 @@ class _AdminPageState extends State<AdminPage> {
 
   String selectedStatus = "Start"; // Default status
 
+  String selectedProject = "All"; // Default project value
+  String selectedModule = "All"; // Default module value
+  List<String> projectOptions = ["All"]; // Initialize with "All" as the default option
+  List<String> moduleOptions = ["All"]; // Initialize with "All" as the default option
+
+
 
   @override
   void initState() {
@@ -44,6 +50,25 @@ class _AdminPageState extends State<AdminPage> {
     apiForSchedules();
     super.initState();
   }
+
+  void extractProjectAndModuleOptions() {
+    if (finalScheduleList != null) {
+      // Create sets to store unique project names and modules
+      Set<String> projectSet = Set<String>();
+      Set<String> moduleSet = Set<String>();
+
+      for (var schedule in finalScheduleList!) {
+        projectSet.add(schedule["project"].toString());
+        moduleSet.add(schedule["module"].toString());
+      }
+
+      // Convert sets to lists and add "All" as the default option
+      projectOptions = ["All", ...projectSet.toList()];
+      moduleOptions = ["All", ...moduleSet.toList()];
+    }
+  }
+
+
 
   Future<void> checkUser() async {
     final prefs = await SharedPreferences.getInstance();
@@ -119,11 +144,13 @@ class _AdminPageState extends State<AdminPage> {
         scheduleList = jsonDecode(response);
         scheduleList1 = scheduleList!["pagination"];
         finalScheduleList = scheduleList1!["pageDataSchedules"];
+        extractProjectAndModuleOptions(); // Extract project and module options
       });
     } else {
       debugPrint('api failed:');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -212,6 +239,44 @@ class _AdminPageState extends State<AdminPage> {
             SizedBox(
               height: 20,
             ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15, bottom: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DropdownButton<String>(
+                    value: selectedProject,
+                    onChanged: (String? newValue) { // Update parameter type to String?
+                      setState(() {
+                        selectedProject = newValue ?? "All"; // Use null check operator and provide a default value
+                      });
+                    },
+                    items: projectOptions.map((String project) {
+                      return DropdownMenuItem<String>(
+                        value: project,
+                        child: Text(project),
+                      );
+                    }).toList(),
+                  ),
+
+                  DropdownButton<String>(
+                    value: selectedModule,
+                    onChanged: (String? newValue) { // Update parameter type to String?
+                      setState(() {
+                        selectedModule = newValue ?? "All"; // Use null check operator and provide a default value
+                      });
+                    },
+                    items: moduleOptions.map((String module) {
+                      return DropdownMenuItem<String>(
+                        value: module,
+                        child: Text(module),
+                      );
+                    }).toList(),
+                  ),
+
+                ],
+              ),
+            ),
             isLoading
                 ? Center(
                 child: CircularProgressIndicator(
@@ -220,10 +285,17 @@ class _AdminPageState extends State<AdminPage> {
                 : ListView.builder(
               physics: ScrollPhysics(),
               shrinkWrap: true,
-              itemCount: finalScheduleList == null
-                  ? 0
-                  : finalScheduleList?.length,
-              itemBuilder: (context, index) => getTask(index),
+              itemCount: finalScheduleList == null ? 0 : finalScheduleList?.length,
+              itemBuilder: (context, index) {
+                // Check if the task matches the selected project and module
+                if ((selectedProject == "All" || finalScheduleList![index]["project"].toString() == selectedProject) &&
+                    (selectedModule == "All" || finalScheduleList![index]["module"].toString() == selectedModule)) {
+                  return getTask(index);
+                } else {
+                  // Return an empty container for tasks that don't match the filters
+                  return Container();
+                }
+              },
             ),
           ],
         ),
