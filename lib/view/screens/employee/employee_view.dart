@@ -35,7 +35,7 @@ class _EmployeePageState extends State<EmployeePage> {
   String? UID;
   bool isLoading = true;
   String? SCHEDULEID;
-  String?  EMPLOYEEDESIGNATION;
+  String? EMPLOYEEDESIGNATION;
   int index = 0;
 
   String selectedStatus = "Start"; // Default status
@@ -58,7 +58,7 @@ class _EmployeePageState extends State<EmployeePage> {
 
   apiForProfile() async {
     var response =
-    await ApiHelper().post(endpoint: "employee/getEmployeeDetails", body: {
+        await ApiHelper().post(endpoint: "employee/getEmployeeDetails", body: {
       "id": UID,
     }).catchError((err) {});
 
@@ -176,7 +176,6 @@ class _EmployeePageState extends State<EmployeePage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -229,7 +228,7 @@ class _EmployeePageState extends State<EmployeePage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Hello ${finalScheduleList![index]["employeeName"]}",
+                                          "Hello ${finalProfileList![index]["name"]}",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 28,
@@ -270,62 +269,76 @@ class _EmployeePageState extends State<EmployeePage> {
                         SizedBox(
                           height: 20,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Select Project"),
-                              DropdownButton<String>(
-                                value: selectedProject,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedProject = newValue ??
-                                        "All"; // Use null check operator and provide a default value
-                                  });
-                                },
-                                items: projectOptions.map((String project) {
-                                  return DropdownMenuItem<String>(
-                                    value: project,
-                                    child: Text(project),
-                                  );
-                                }).toList(),
-                              ),
-                              Text("Select Module"),
-                              DropdownButton<String>(
-                                value: selectedModule,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedModule = newValue ??
-                                        "All"; // Use null check operator and provide a default value
-                                  });
-                                },
-                                items: moduleOptions.map((String module) {
-                                  return DropdownMenuItem<String>(
-                                    value: module,
-                                    child: Text(module),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
-                        ),
                         isLoading
                             ? Center(
-                                child: CircularProgressIndicator(
-                                  color: Color(ColorT.PrimaryColor),
+                          child: CircularProgressIndicator(
+                            color: Color(ColorT.PrimaryColor),
+                          ),
+                        )
+                            : finalScheduleList == null
+                            ? Center(
+                          child: CircularProgressIndicator(
+                            color: Color(ColorT.PrimaryColor),
+                          ),
+                        )
+                            :
+                        finalScheduleList!
+                                .isEmpty // Check if finalScheduleList is empty
+                            ? Center(
+                                child: Text(
+                                  "No Assigned Schedules",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               )
-                            : finalScheduleList == null
-                                ? Center(
-                                    child: CircularProgressIndicator(
-                                      color: Color(ColorT.PrimaryColor),
+                            : Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 15, bottom: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Select Project"),
+                                    DropdownButton<String>(
+                                      value: selectedProject,
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          selectedProject = newValue ??
+                                              "All"; // Use null check operator and provide a default value
+                                        });
+                                      },
+                                      items:
+                                          projectOptions.map((String project) {
+                                        return DropdownMenuItem<String>(
+                                          value: project,
+                                          child: Text(project),
+                                        );
+                                      }).toList(),
                                     ),
-                                  )
-                                : ListView.builder(
+                                    Text("Select Module"),
+                                    DropdownButton<String>(
+                                      value: selectedModule,
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          selectedModule = newValue ??
+                                              "All"; // Use null check operator and provide a default value
+                                        });
+                                      },
+                                      items: moduleOptions.map((String module) {
+                                        return DropdownMenuItem<String>(
+                                          value: module,
+                                          child: Text(module),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                        ListView.builder(
                                     physics: ScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount: finalScheduleList?.length ?? 0,
+                                    itemCount: finalScheduleList!.length,
                                     itemBuilder: (context, index) =>
                                         getTask(index),
                                   ),
@@ -357,7 +370,8 @@ class _EmployeePageState extends State<EmployeePage> {
             child: InkWell(
               onTap: () {
                 SCHEDULEID = finalScheduleList![index]["id"].toString();
-                EMPLOYEEDESIGNATION = finalProfileList![index]["Desigvalue"].toString();
+                EMPLOYEEDESIGNATION =
+                    finalProfileList![index]["Desigvalue"].toString();
                 _showTaskBottomSheet(EMPLOYEEDESIGNATION!);
               },
               child: Container(
@@ -493,7 +507,14 @@ class _EmployeePageState extends State<EmployeePage> {
     List<String> availableStatuses;
     // Determine available statuses based on employee designation
     if (employeeDesignation == "Project Manager") {
-      availableStatuses = ['Start', 'Ongoing', 'Done', 'On Hold', 'Approved', 'Rejected'];
+      availableStatuses = [
+        'Start',
+        'Ongoing',
+        'Done',
+        'On Hold',
+        'Approved',
+        'Rejected'
+      ];
     } else if (employeeDesignation == "Developer") {
       availableStatuses = ['Start', 'Ongoing', 'Done', 'On Hold'];
     } else {
@@ -524,7 +545,8 @@ class _EmployeePageState extends State<EmployeePage> {
                         selectedStatus = newValue!;
                       });
                     },
-                    items: availableStatuses.map<DropdownMenuItem<String>>((String value) {
+                    items: availableStatuses
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
